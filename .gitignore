@@ -6,3 +6,6 @@ data/raw/
 data/processed/
 chroma_db/
 .ipynb_checkpoints/
+
+# the project plan lives as a doc on claude.ai, not in this repo
+*.docx
