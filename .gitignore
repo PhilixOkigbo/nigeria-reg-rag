@@ -11,3 +11,6 @@ chroma_db/
 *.docx
 # working backups
 *.bak
+
+# Claude Code notes - local only
+CLAUDE.md
