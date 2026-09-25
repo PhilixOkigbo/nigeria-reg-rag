@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "question": "What is the minimum paid-up share capital for a commercial bank with international authorisation?",
+    "expected_doc": "Review of Minimum Capital",
+    "answer": "N500 billion"
+  },
+  {
+    "id": 2,
+    "question": "How long must a bank keep customer identification records?",
+    "expected_doc": "Anti-Money Laundering/Combating the Financing",
+    "answer": "5 years"
+  },
+  {
+    "id": 3,
+    "question": "What qualifications must members of a bank's board have?",
+    "expected_doc": "Corporate Governance Guidelines",
+    "answer": "Persons of proven integrity, knowledgeable in business and financial matters"
+  },
+  {
+    "id": 4,
+    "question": "What is the minimum capital adequacy ratio for a bank with international authorisation?",
+    "expected_doc": "Guidelines on Regulatory Capital",
+    "answer": "15%"
+  },
+  {
+    "id": 5,
+    "question": "What are the minimum capital requirements for commercial banks in Kenya?",
+    "expected_doc": null,
+    "answer": "Not in the corpus - the system should refuse"
+  },
+  {
+    "id": 6,
+    "question": "What does circular FPR/DIR/PUB/CIR/002/009 require?",
+    "expected_doc": "Review of Minimum Capital",
+    "answer": "The 2024 bank recapitalisation programme"
+  },
+  {
+    "id": 8,
+    "question": "What are the AML record keeping requirements?",
+    "expected_doc": "Anti-Money Laundering/Combating the Financing",
+    "answer": "5 years"
+  },
+  {
+    "id": 9,
+    "question": "What must a bank do when a customer is identified as a politically exposed person?",
+    "expected_doc": "Politically Exposed",
+    "answer": "Senior management approval, enhanced ongoing monitoring"
+  },
+  {
+    "id": 10,
+    "question": "How quickly must a bank report a cybersecurity incident to the CBN?",
+    "expected_doc": "Cybersecurity",
+    "answer": "?"
+  },
+  {
+    "id": 11,
+    "question": "When does an account become dormant and what happens to the balance?",
+    "expected_doc": "DORMANT ACCOUNTS",
+    "answer": "?"
+  },
+  {
+    "id": 12,
+    "question": "What liquidity ratio must a bank maintain?",
+    "expected_doc": "Liquidity Risk Management",
+    "answer": "?"
+  },
+  {
+    "id": 13,
+    "question": "What is the penalty for carrying on banking business without a licence?",
+    "expected_doc": "Banks and Other Financial Institutions Act",
+    "answer": "?"
+  },
+  {
+    "id": 14,
+    "question": "What identification documents does a new individual customer need to open an account?",
+    "expected_doc": "Uniform Account Opening",
+    "answer": "?"
+  },
+  {
+    "id": 15,
+    "question": "What is the NDIC's role when a bank fails?",
+    "expected_doc": "Nigeria Deposit Insurance Corporation Act",
+    "answer": "?"
+  },
+  {
+    "id": 16,
+    "question": "What capabilities must an automated anti-money laundering system have?",
+    "expected_doc": "Baseline Standards",
+    "answer": "?"
+  },
+  {
+    "id": 17,
+    "question": "How must a capital market operator handle a client complaint?",
+    "expected_doc": "Complaints Management",
+    "answer": "?"
+  },
+  {
+    "id": 18,
+    "question": "What are the custody requirements for digital assets?",
+    "expected_doc": "Digital Assets",
+    "answer": "?"
+  }
+]
