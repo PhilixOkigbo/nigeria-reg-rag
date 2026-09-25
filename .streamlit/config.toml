@@ -1,0 +1,11 @@
+# Streamlit's source watcher walks every module in sys.modules. That reaches
+# transformers' lazy model registry, which tries to import a few hundred image
+# processors that want torchvision - a dependency this project does not have and
+# does not need, since only the text encoder is used. Each probe logs a
+# traceback and buries the app's own output. Turning the watcher off silences
+# them; the cost is that edits to app.py need a restart rather than reloading.
+[server]
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false

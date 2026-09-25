@@ -2,25 +2,21 @@
 requests
 beautifulsoup4
 lxml
-
 # Phase 2 - reading PDFs and OCR
 pymupdf
 pytesseract
 Pillow
-
 # Phase 3 - embeddings and vector database
 sentence-transformers
 chromadb
-
 # Phase 4 - keyword retrieval
 rank-bm25
-
 # Phase 5 - the LLM
 google-genai
-
 # utilities
 python-dotenv
 pandas
 tqdm
 jupyter
 ipykernel
+streamlit
