@@ -49,6 +49,45 @@ _records = chunks_df.to_dict("records")
 _bm25 = BM25Okapi([tokenize(r["search_text"]) for r in _records])
 
 
+# --- Regulator routing ---------------------------------------------------
+# The corpus is 61% SEC text (2,336 chunks) against 1,173 from the CBN, so a
+# question about banks competes with a much larger body of capital-market
+# rules. Phase 6 saw bank questions answered out of SEC instruments. These
+# hints nudge ranking towards the regulator a question is about, without ever
+# excluding a document outright - a wrong guess should cost rank, not recall.
+
+BANKING_TERMS = (
+    "bank", "banks", "banking", "deposit", "depositor", "depositors",
+    "dmb", "psb", "cbn", "central bank", "account", "dormant", "customer",
+    "bvn", "teller", "branch", "liquidity", "capital adequacy", "ndic",
+    "insured institution", "licence", "license",
+)
+MARKET_TERMS = (
+    "capital market", "securities", "sec ", "broker", "dealer", "issuer",
+    "digital asset", "virtual asset", "token", "custodian", "custody",
+    "collective investment", "fund manager", "registrar", "cmo", "sro",
+    "investor", "listing", "prospectus",
+)
+BANKING_REGULATORS = ("CBN", "NDIC", "FGN")
+MARKET_REGULATORS = ("SEC",)
+
+
+def infer_regulators(question):
+    """Which regulators a question is probably about, or None when unclear.
+
+    Returning None on a mixed or unmarked question is deliberate: no signal is
+    better than a confident wrong one.
+    """
+    q = f" {question.lower()} "
+    banking = any(t in q for t in BANKING_TERMS)
+    market = any(t in q for t in MARKET_TERMS)
+    if banking and not market:
+        return BANKING_REGULATORS
+    if market and not banking:
+        return MARKET_REGULATORS
+    return None
+
+
 def search_dense(question, k=5):
     qv = embedder.encode(QUERY_PREFIX + question, normalize_embeddings=True).tolist()
     res = collection.query(query_embeddings=[qv], n_results=k)
@@ -64,12 +103,26 @@ def search_bm25(question, k=5):
     return [{**_records[i], "score": round(float(scores[i]), 3)} for i in top]
 
 
-def search_hybrid(question, k=5, pool=20, c=60):
-    """Reciprocal Rank Fusion of dense and BM25. This is the chosen retriever."""
+def search_hybrid(question, k=5, pool=20, c=60, route=True, boost=0.25):
+    """Reciprocal Rank Fusion of dense and BM25. This is the chosen retriever.
+
+    With `route`, chunks from the regulator the question appears to be about
+    get their fused score lifted by `boost`. It reorders candidates already
+    retrieved; nothing is filtered out, so a misread question can cost a
+    document rank but never remove it from the pool.
+    """
     fused = {}
     for lst in (search_dense(question, k=pool), search_bm25(question, k=pool)):
         for rank, h in enumerate(lst, 1):
             entry = fused.setdefault(h["chunk_id"], {"hit": h, "score": 0.0})
             entry["score"] += 1.0 / (c + rank)
+
+    preferred = infer_regulators(question) if route else None
+    if preferred:
+        for e in fused.values():
+            if e["hit"].get("regulator") in preferred:
+                e["score"] *= 1.0 + boost
+
     best = sorted(fused.values(), key=lambda e: -e["score"])[:k]
-    return [{**e["hit"], "score": round(e["score"], 5)} for e in best]
+    return [{**e["hit"], "score": round(e["score"], 5), "routed_to": preferred}
+            for e in best]

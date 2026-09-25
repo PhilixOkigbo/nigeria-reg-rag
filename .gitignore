@@ -9,3 +9,5 @@ chroma_db/
 
 # the project plan lives as a doc on claude.ai, not in this repo
 *.docx
+# working backups
+*.bak
