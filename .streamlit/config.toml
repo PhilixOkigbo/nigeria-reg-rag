@@ -6,6 +6,10 @@
 # them; the cost is that edits to app.py need a restart rather than reloading.
 [server]
 fileWatcherType = "none"
+# Listen on this machine only. The default also binds the network interface,
+# which lets anyone on the same network open the app - and spend the Gemini
+# quota behind it.
+address = "localhost"
 
 [browser]
 gatherUsageStats = false
